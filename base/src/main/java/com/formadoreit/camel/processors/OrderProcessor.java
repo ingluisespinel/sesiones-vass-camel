@@ -13,17 +13,20 @@ public class OrderProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         var order1 = Order.builder()
                 .id(UUID.randomUUID().toString())
-                .amount(100d)
+                .amount(10000d)
+                .tax(0d)
                 .build();
 
         var order2 = Order.builder()
                 .id(UUID.randomUUID().toString())
                 .amount(1200d)
+                .tax(0d)
                 .build();
 
         var order3 = Order.builder()
                 .id(UUID.randomUUID().toString())
                 .amount(50d)
+                .tax(0d)
                 .build();
         var orders = new ArrayList<>();
         orders.add(order1);

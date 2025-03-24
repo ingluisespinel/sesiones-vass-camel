@@ -1,8 +1,10 @@
 package com.formadoreit.camel.routes;
 
+import com.formadoreit.camel.aggregators.OrderAggregator;
 import com.formadoreit.camel.domain.Order;
 import com.formadoreit.camel.processors.OrderProcessor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
 
 import java.util.UUID;
@@ -17,7 +19,7 @@ public class MyRouteBuilder extends RouteBuilder {
      * Let's configure the Camel routing rules using Java code...
      */
     public void configure() {
-        from("timer:disparador?period=5000")
+        from("timer:disparador?period={{app.timer-period}}")
                 .routeId("disparador")
                 // Punto de procesamiento llamando a una clase Processor
                 .process(new OrderProcessor())
@@ -47,14 +49,20 @@ public class MyRouteBuilder extends RouteBuilder {
                 .routeId("ruta-dos")
                 .log("================================================")
                 .log("Procesando desde ruta dos con Body: ${body}, Body Original ${header.BodyOriginal}")
+                .setHeader("TotalOrders", simple("${body.size}"))
                 .split().body()
                     .log("Fitrando orden ${body.amount}")
                     .filter(simple("${body.amount} > 1000"))
                         .log("Order ${body.id} filtrada ")
-                        .stop()
+                        .setHeader("HeaderAdicional", constant("Hola"))
+                        //.bean("taxCalculator", "calculate") Llamamos al Bean inyectando parámetros usando anotacionses propias de Camel
+                        .bean("taxCalculator", "calculate( ${body} , ${header.HeaderAdicional} )")
+                        .log("Impustos calculados ${body.tax}")
                     .end()
                     .log("Order ${body.id} finaliza procesamiento en ruta dos")
-                .end();
+                .aggregate(constant(true), new OrderAggregator())
+                .completionSize(simple("${header.TotalOrders}"))
+                .log("Post Aggregation Body ${body}");
 
         from("direct:otroChoice")
                 .routeId("ruta-otro-choice")

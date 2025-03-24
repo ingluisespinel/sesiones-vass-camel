@@ -10,5 +10,6 @@ import lombok.*;
 public class Order {
     private String id;
     private Double amount;
+    private Double tax;
 
 }
