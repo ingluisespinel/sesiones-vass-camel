@@ -1,0 +1,8 @@
+com/formadoreit/camel/beans/BeanConfiguration.class
+com/formadoreit/camel/domain/Order$OrderBuilder.class
+com/formadoreit/camel/processors/OrderProcessor.class
+com/formadoreit/camel/MainApp.class
+com/formadoreit/camel/domain/Order.class
+com/formadoreit/camel/routes/MyRouteBuilder.class
+com/formadoreit/camel/beans/TaxCalculator.class
+com/formadoreit/camel/aggregators/OrderAggregator.class

@@ -15,18 +15,21 @@ public class OrderProcessor implements Processor {
                 .id(UUID.randomUUID().toString())
                 .amount(10000d)
                 .tax(0d)
+                .paymentMethod("Paypal")
                 .build();
 
         var order2 = Order.builder()
                 .id(UUID.randomUUID().toString())
                 .amount(1200d)
                 .tax(0d)
+                .paymentMethod("Credito")
                 .build();
 
         var order3 = Order.builder()
                 .id(UUID.randomUUID().toString())
                 .amount(50d)
                 .tax(0d)
+                .paymentMethod("OTRO METODO")
                 .build();
         var orders = new ArrayList<>();
         orders.add(order1);

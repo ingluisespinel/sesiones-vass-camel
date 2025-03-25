@@ -15,6 +15,7 @@ public class TaxCalculator {
     public Order calculate(Order order, String headerAdicional){
         log.info("Calculando Tax para orden de monto {}, headerAdicional {}", order.getAmount(), headerAdicional);
         order.setTax(order.getAmount() * tax);
-        return order;
+        throw new IllegalStateException("No se pudo calcular impuestos");
+        //return order;
     }
 }

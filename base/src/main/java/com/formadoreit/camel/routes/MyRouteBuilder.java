@@ -2,6 +2,7 @@ package com.formadoreit.camel.routes;
 
 import com.formadoreit.camel.aggregators.OrderAggregator;
 import com.formadoreit.camel.domain.Order;
+import com.formadoreit.camel.processors.ErrorHandler;
 import com.formadoreit.camel.processors.OrderProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.PropertyInject;
@@ -19,8 +20,18 @@ public class MyRouteBuilder extends RouteBuilder {
      * Let's configure the Camel routing rules using Java code...
      */
     public void configure() {
+        errorHandler(deadLetterChannel("direct:errorHandler")
+                .maximumRedeliveries(0));
+
+        onException(IllegalStateException.class)
+                .maximumRedeliveries(2)
+                .redeliveryDelay(2000)
+                .handled(true)
+                .to("direct:errorHandler");
+
         from("timer:disparador?period={{app.timer-period}}")
                 .routeId("disparador")
+                .autoStartup(false)
                 // Punto de procesamiento llamando a una clase Processor
                 .process(new OrderProcessor())
                 .split(body())
@@ -34,6 +45,7 @@ public class MyRouteBuilder extends RouteBuilder {
                 .process(exchange -> {
                     var body = exchange.getMessage().getBody(Order.class);
                     log.info("Body -> {}",body);
+                    throw new RuntimeException("Algo pasó !");
                 })
                 .choice()
                     .when(simple("${body.amount} > 500"))
@@ -53,20 +65,35 @@ public class MyRouteBuilder extends RouteBuilder {
                 .split().body()
                     .log("Fitrando orden ${body.amount}")
                     .filter(simple("${body.amount} > 1000"))
-                        .log("Order ${body.id} filtrada ")
-                        .setHeader("HeaderAdicional", constant("Hola"))
-                        //.bean("taxCalculator", "calculate") Llamamos al Bean inyectando parámetros usando anotacionses propias de Camel
-                        .bean("taxCalculator", "calculate( ${body} , ${header.HeaderAdicional} )")
-                        .log("Impustos calculados ${body.tax}")
+                        .to("direct:calcularImpuestos")
                     .end()
                     .log("Order ${body.id} finaliza procesamiento en ruta dos")
                 .aggregate(constant(true), new OrderAggregator())
                 .completionSize(simple("${header.TotalOrders}"))
                 .log("Post Aggregation Body ${body}");
 
+        from("direct:calcularImpuestos")
+                .log("Order ${body.id} filtrada ")
+                .doTry()
+                    .setHeader("HeaderAdicional", constant("Hola"))
+                    //.bean("taxCalculator", "calculate") Llamamos al Bean inyectando parámetros usando anotacionses propias de Camel
+                    .bean("taxCalculator", "calculate( ${body} , ${header.HeaderAdicional} )")
+                    .log("Impustos calculados ${body.tax}")
+                .doCatch(IllegalArgumentException.class)
+                    .log("Manejando Error IllegalArgumentException ${exception}")
+                .doFinally()
+                    .log("Ejecutando Finally");
+
         from("direct:otroChoice")
                 .routeId("ruta-otro-choice")
                 .log("Procesando en otro choice");
+
+        from("direct:errorHandler")
+                .log("Manejando error...")
+                .process(new ErrorHandler())
+                // Enviar mensajes a rutas definidas en Header Destinatarios
+                .recipientList(header("Destinatarios"));
+
     }
 
 }

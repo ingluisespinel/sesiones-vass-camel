@@ -1,0 +1,7 @@
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/MainApp.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/aggregators/OrderAggregator.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/beans/BeanConfiguration.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/beans/TaxCalculator.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/domain/Order.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/processors/OrderProcessor.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/base/src/main/java/com/formadoreit/camel/routes/MyRouteBuilder.java
