@@ -24,6 +24,13 @@ public class MyRouteBuilder extends RouteBuilder {
      */
     public void configure() {
         from("file:files?moveFailed=.errors&move=.procesados")
+                .to("direct:procesarArchivos");
+
+
+        from("sftp:{{app.sftp.uri}}&move=.procesados&moveFailed=.fallidos")
+                .to("direct:procesarArchivos");
+
+        from("direct:procesarArchivos")
                 .log("Procesando archivo ${headers}")
                 .choice()
                     .when(header("CamelFileName").regex("^.*\\.json"))
@@ -36,7 +43,7 @@ public class MyRouteBuilder extends RouteBuilder {
                         .log("Procesando CSV")
                         .to("direct:convertCSVToObject")
                     .otherwise()
-                        .throwException(new RuntimeException("Archivo no soportado"))
+                    .throwException(new RuntimeException("Archivo no soportado"))
                 .end();
 
         from("direct:convertirAJson")
