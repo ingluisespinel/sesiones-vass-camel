@@ -77,6 +77,11 @@
       <artifactId>camel-jaxb</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-csv</artifactId>
+    </dependency>
+
     <!-- testing -->
     <dependency>
       <groupId>org.apache.camel</groupId>
