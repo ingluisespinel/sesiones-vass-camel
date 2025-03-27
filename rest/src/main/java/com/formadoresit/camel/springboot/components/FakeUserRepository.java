@@ -26,8 +26,8 @@ public class FakeUserRepository {
 
     public User getUserById(Integer id){
         return users.stream()
-                .findAny().filter(user -> id.equals(user.getId()))
-                .orElse(null);
+                .filter(user -> id.equals(user.getId()))
+                .findAny().orElse(null);
     }
 
     public User save(User user){
