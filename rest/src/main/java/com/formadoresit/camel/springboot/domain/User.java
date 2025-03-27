@@ -1,4 +1,4 @@
-package com.formadoresit.camel.springboot.components;
+package com.formadoresit.camel.springboot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class User {
     private int id;
+    private int age;
     private String name;
 }
