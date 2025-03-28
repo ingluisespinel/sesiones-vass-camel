@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.formadoresit.camel.springboot.MySpringBootApplicationTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 9.026 s <<< FAILURE! - in com.formadoresit.camel.springboot.MySpringBootApplicationTest
+com.formadoresit.camel.springboot.MySpringBootApplicationTest.test  Time elapsed: 1.359 s  <<< ERROR!
+java.lang.IllegalArgumentException: Cannot advice route as route with id: hello does not exist
+	at com.formadoresit.camel.springboot.MySpringBootApplicationTest.test(MySpringBootApplicationTest.java:27)
+

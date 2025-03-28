@@ -1,0 +1,10 @@
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/MySpringBootApplication.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/components/FakeUserRepository.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/components/MySpringBean.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/components/User.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/config/ActivemqConfig.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/domain/UserEntity.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/dto/ObjectItem.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/routes/MySpringBootRouter.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/routes/RestRoutes.java
+/home/luis/Development/Apache Camel/FormadoresIT/Marzo/Sesiones/rest/src/main/java/com/formadoresit/camel/springboot/routes/UserRoutes.java
