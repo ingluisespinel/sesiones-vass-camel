@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 public class UserRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
+
+        interceptFrom("activemq:queue:newUsers")
+                .log("Nuevo mensaje interceptado")
+                .to("micrometer:counter:newUsers?increment=1");
+
         from("direct:getUsersByAge")
                 .log("Consultando por edad ${header.age}")
                 .to("sql:SELECT * FROM usuario WHERE age = :#age");
@@ -26,10 +31,16 @@ public class UserRoutes extends RouteBuilder {
                 .end();
 
         from("direct:notificarNuevoUsuario")
-                .log("Notificando")
-                .throwException(new RuntimeException("No se pudo notificar"));
+                .routeId("notificar-usuario")
+                .log("Notificando via Activemq ${body}")
+                .to("activemq:queue:newUsers?disableReplyTo=true")
+                .throwException(new RuntimeException("Error !"))
+                .log("Mensaje entregado.");
 
         from("direct:insertUserJPA")
                 .to("jpa://com.formadoresit.camel.springboot.domain.UserEntity");
+
+        from("activemq:queue:newUsers")
+                .log("Consumiendo mensaje newUsers ${body} de tipo ${body.class}");
     }
 }

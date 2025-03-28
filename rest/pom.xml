@@ -120,6 +120,33 @@
       <artifactId>camel-jpa-starter</artifactId>
     </dependency>
 
+    <!-- DEPENDENCIAS REQUERIDAS PARA CONECTIVIDAD CON ACTIVEMQ -->
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-activemq-starter</artifactId>
+    </dependency>
+
+    <!-- Metricas -->
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-micrometer-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/io.hawt/hawtio-springboot -->
+    <dependency>
+      <groupId>io.hawt</groupId>
+      <artifactId>hawtio-springboot</artifactId>
+      <version>4.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel.springboot</groupId>
+      <artifactId>camel-management-starter</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
